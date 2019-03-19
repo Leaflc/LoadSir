@@ -26,6 +26,14 @@ public class LoadService<T> {
         Context context = targetContext.getContext();
         View oldContent = targetContext.getOldContent();
         ViewGroup.LayoutParams oldLayoutParams = oldContent.getLayoutParams();
+        ViewGroup.MarginLayoutParams oldMarginParams;
+        if (oldLayoutParams instanceof ViewGroup.MarginLayoutParams) {
+            oldMarginParams = (ViewGroup.MarginLayoutParams) oldLayoutParams;
+        } else {
+            oldMarginParams = new ViewGroup.MarginLayoutParams(oldLayoutParams);
+        }
+        oldMarginParams.setMargins(0, 0, 0, 0);
+        oldContent.setLayoutParams(oldMarginParams);
         loadLayout = new LoadLayout(context, onReloadListener);
         loadLayout.setupSuccessLayout(new SuccessCallback(oldContent, context,
                 onReloadListener));
